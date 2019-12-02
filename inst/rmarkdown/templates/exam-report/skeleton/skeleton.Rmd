@@ -1,0 +1,135 @@
+---
+title: "Template Title"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: 
+  html_document: 
+    number_sections: yes
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+pacman::p_load(tidyverse, examMarking)
+theme_set(theme_bw())
+```
+
+```{r, include=FALSE}
+# Get the data
+data("SMI_2018_marks_clean")
+```
+
+# Grade summary
+
+## Table
+
+```{r}
+get_grade_summary(SMI_2018_marks_clean$grade) %>% 
+  knitr::kable()
+```
+
+## Bar-chart
+
+```{r}
+SMI_2018_marks_clean %>% ggplot(aes(grade, fill = grade)) + geom_bar(show.legend = FALSE)
+```
+
+# Exam
+
+```{r}
+SMI_2018_marks_clean %>% 
+  profile_plot("^Q", grade)
+```
+
+# Scaling
+
+## Method
+
+Discussion of method used. 
+
+```{r}
+SMI_2018_marks_clean <- 
+  SMI_2018_marks_clean %>% 
+  mutate(
+    norm_mark  = norm_glonek(Total, a = 0.5, b = 1)
+  )
+```
+
+
+## Results
+
+```{r}
+norm_compare(SMI_2018_marks_clean$Total, 
+             SMI_2018_marks_clean$norm_mark) %>% 
+  knitr::kable()
+```
+
+```{r}
+plot_norm(SMI_2018_marks_clean, Total, norm_mark, ID)
+```
+
+
+# RAA
+
+## Medical supps
+
+The following have a medical supp. 
+
+## Academic supps
+
+The following have an academic supp. 
+
+# Previous years
+
+Chart showing previous exam results
+
+# Checklist
+
+1. Sent completed grade-rosters to LSO.
+2. Audit performed. 
+3. Organised exam viewing if necessary. 
+
+
+# Example announcements
+
+## Exam viewing announcement
+
+```
+Mathematics IB Final Results have now been posted on Access Adelaide.
+
+There will be an opportunity for you to review your exam paper should you wish, on Tuesday 27th of November from 10:00am-11:30am outside the School of Mathematical Sciences Office, level 6, Ingkarni Wardli.
+
+You must bring photo ID to view your exam. No ID = no view.
+
+You will not be permitted to take notes or photographs or use your mobile phone.
+
+You will be able to ask questions.
+```
+
+## R/AA Exam Offers - deciphering the code
+
+```
+For those of you that got close but did not pass, you might have been offered an Additional Assessment Examination.
+
+What you will see on Access Adelaide, under your mark in small blue text is this: "Additional Assessment - All Papers" which means that you have been offered an Additional Assessment Examination (and "All Papers" refers to a whole new exam, not part of an exam).
+
+You should study for and sit this exam. You must check the day, time and place via Access Adelaide or the University's Examinations webpage.
+
+If you have been offered a Medical/Compassionate Exam, Access Adelaide will say: "Replacement Examination - All Papers".
+```
+
+
+## Email to RAA
+
+```
+This email is to confirm that you have a Replacement/Additional Assessment Examination for MATHS 1012 Mathematics IB.
+
+You will also see a note of this under your result on Access Adelaide.
+
+You should study for and sit this exam.
+
+You must check the day, time and place via Access Adelaide or the University's Examinations webpage.
+
+Best wishes,
+Adrian
+```

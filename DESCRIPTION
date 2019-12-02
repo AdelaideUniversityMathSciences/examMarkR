@@ -1,0 +1,22 @@
+Package: examMarkR
+Type: Package
+Title: code for exam marking
+Version: 0.1.0
+Authors@R: person("Jono", "Tuke", email = "jonotuke@gmail.com",
+                      role = c("aut", "cre"))
+Description: code to normalise and access exam marks
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    magrittr,
+    tidyr,
+    ggplot2, 
+    stringr
+RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 2.1.0)
+VignetteBuilder: knitr
