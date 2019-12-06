@@ -54,7 +54,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/Case_study.html">Case study</a>
+    </li>
+    <li>
+      <a href="../articles/admin.html">Exam admin</a>
+    </li>
+    <li>
       <a href="../articles/analyis-marks.html">Analysing course marks: an example</a>
+    </li>
+    <li>
+      <a href="../articles/exam_report.html">Exam report</a>
+    </li>
+    <li>
+      <a href="../articles/normalization.html">Scaling data</a>
     </li>
   </ul>
 </li>
@@ -75,7 +87,7 @@
       <h1>Analysing course marks: an example</h1>
                         <h4 class="author">Jono Tuke</h4>
             
-            <h4 class="date">2019-12-02</h4>
+            <h4 class="date">2019-12-06</h4>
       
       
       <div class="hidden name"><code>analyis-marks.Rmd</code></div>
@@ -149,28 +161,13 @@
 <h2 class="hasAnchor">
 <a href="#dealing-with-exemptions-and-missing" class="anchor"></a>Dealing with exemptions and missing</h2>
 <p>We can convert missing to zero and EX to NA with the following:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">SMI_<span class="dv">2018</span>_marks</a></code></pre></div>
-<pre><code>## # A tibble: 63 x 21
-##    ID    A1    A2       A3    A4    A5     P  OQ01  OQ02  OQ03  OQ04  OQ05  OQ06
-##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Tota… 37    42     30    49      46   105   3       3     2     4     3     3
-##  2 1     36    42     27.5  47.5    45    97   3       3     2     4     3     3
-##  3 2     37    38     28.5  43      42    87   3       3     2     3     2     3
-##  4 3     37    39     29    34      41    80   3       3     1     3     2     1
-##  5 4     37    39     29.5  32.5    44    87   3       3     0    NA     2     3
-##  6 5     37    39     25    38      40    96   3       3     2     3     3     3
-##  7 6     36    38     30    45.5    41    96   2.5     3     1     4     3     3
-##  8 7     &lt;NA&gt;  39     23.5  41      40    93   3       2     1     4     2     1
-##  9 8     32    41     29    42.5    44   107   3       3     2     4     3     3
-## 10 9     34.5  40     30    49      44   107   3       3     2     4     3     3
-## # … with 53 more rows, and 8 more variables: OQ07 &lt;dbl&gt;, OQ08 &lt;dbl&gt;, Q1 &lt;dbl&gt;,
-## #   Q2 &lt;dbl&gt;, Q3 &lt;dbl&gt;, Q4 &lt;dbl&gt;, Q5 &lt;dbl&gt;, Q6 &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">SMI_<span class="dv">2018</span>_marks  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/clean_marks_df.html">clean_marks_df</a></span>(<span class="st">"^A"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/clean_marks_df.html">clean_marks_df</a></span>(<span class="st">"^P$"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/clean_marks_df.html">clean_marks_df</a></span>(<span class="st">"^OQ"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/clean_marks_df.html">clean_marks_df</a></span>(<span class="st">"^Q"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># SMI_2018_marks</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="co"># SMI_2018_marks  &lt;- </span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#   clean_marks_df("^A") %&gt;% </span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#   clean_marks_df("^P$") %&gt;% </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#   clean_marks_df("^OQ") %&gt;% </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#   clean_marks_df("^Q")</span></a></code></pre></div>
 <p>Note that we can use regular expressions to give the columns that need cleaning.</p>
 </div>
 </div>
@@ -181,184 +178,72 @@
 <h2 class="hasAnchor">
 <a href="#get-proportions" class="anchor"></a>Get proportions</h2>
 <p>For each assessment piece, we can calculate the proportions. This assumes that there is a row with the totals. In canvas, this is the first row.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">SMI_<span class="dv">2018</span>_marks &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/get_prop_df.html">get_prop_df</a></span>(<span class="st">"^A"</span>, <span class="dt">total_row =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Assignments</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/get_prop_df.html">get_prop_df</a></span>(<span class="st">"^P$"</span>, <span class="dt">total_row =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># project</span></a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/get_prop_df.html">get_prop_df</a></span>(<span class="st">"^OQ"</span>, <span class="dt">total_row =</span> <span class="dv">1</span>) <span class="co"># Online quizzes</span></a>
-<a class="sourceLine" id="cb10-6" title="6">SMI_<span class="dv">2018</span>_marks</a></code></pre></div>
-<pre><code>## # A tibble: 63 x 21
-##    ID       A1    A2    A3    A4    A5     P  OQ01  OQ02  OQ03  OQ04  OQ05  OQ06
-##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Tota… 1     1     1     1     1     1     1     1       1    1    1     1    
-##  2 1     0.973 1     0.917 0.969 0.978 0.924 1     1       1    1    1     1    
-##  3 2     1     0.905 0.95  0.878 0.913 0.829 1     1       1    0.75 0.667 1    
-##  4 3     1     0.929 0.967 0.694 0.891 0.762 1     1       0.5  0.75 0.667 0.333
-##  5 4     1     0.929 0.983 0.663 0.957 0.829 1     1       0    0    0.667 1    
-##  6 5     1     0.929 0.833 0.776 0.870 0.914 1     1       1    0.75 1     1    
-##  7 6     0.973 0.905 1     0.929 0.891 0.914 0.833 1       0.5  1    1     1    
-##  8 7     0     0.929 0.783 0.837 0.870 0.886 1     0.667   0.5  1    0.667 0.333
-##  9 8     0.865 0.976 0.967 0.867 0.957 1.02  1     1       1    1    1     1    
-## 10 9     0.932 0.952 1     1     0.957 1.02  1     1       1    1    1     1    
-## # … with 53 more rows, and 8 more variables: OQ07 &lt;dbl&gt;, OQ08 &lt;dbl&gt;, Q1 &lt;dbl&gt;,
-## #   Q2 &lt;dbl&gt;, Q3 &lt;dbl&gt;, Q4 &lt;dbl&gt;, Q5 &lt;dbl&gt;, Q6 &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># SMI_2018_marks &lt;- </span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">#   get_prop_df("^A", total_row = 1) %&gt;% # Assignments</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">#   get_prop_df("^P$", total_row = 1) %&gt;% # project</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#   get_prop_df("^OQ", total_row = 1) # Online quizzes</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co"># SMI_2018_marks</span></a></code></pre></div>
 </div>
 <div id="get-totals" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-totals" class="anchor"></a>Get totals</h2>
 <p>For the exam, we need to exam total, we obtain this by adding the question columns</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">SMI_<span class="dv">2018</span>_marks<span class="op">$</span>E  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/get_total.html">get_total</a></span>(<span class="st">"^Q"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># SMI_2018_marks$E  &lt;- </span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co">#   get_total("^Q")</span></a></code></pre></div>
 <p>And then convert this to a proportion and the exam questions.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">SMI_<span class="dv">2018</span>_marks  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/get_prop_df.html">get_prop_df</a></span>(<span class="st">"^E$|^Q"</span>, <span class="dt">total_row =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb13-4" title="4">SMI_<span class="dv">2018</span>_marks</a></code></pre></div>
-<pre><code>## # A tibble: 63 x 22
-##    ID       A1    A2    A3    A4    A5     P  OQ01  OQ02  OQ03  OQ04  OQ05  OQ06
-##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Tota… 1     1     1     1     1     1     1     1       1    1    1     1    
-##  2 1     0.973 1     0.917 0.969 0.978 0.924 1     1       1    1    1     1    
-##  3 2     1     0.905 0.95  0.878 0.913 0.829 1     1       1    0.75 0.667 1    
-##  4 3     1     0.929 0.967 0.694 0.891 0.762 1     1       0.5  0.75 0.667 0.333
-##  5 4     1     0.929 0.983 0.663 0.957 0.829 1     1       0    0    0.667 1    
-##  6 5     1     0.929 0.833 0.776 0.870 0.914 1     1       1    0.75 1     1    
-##  7 6     0.973 0.905 1     0.929 0.891 0.914 0.833 1       0.5  1    1     1    
-##  8 7     0     0.929 0.783 0.837 0.870 0.886 1     0.667   0.5  1    0.667 0.333
-##  9 8     0.865 0.976 0.967 0.867 0.957 1.02  1     1       1    1    1     1    
-## 10 9     0.932 0.952 1     1     0.957 1.02  1     1       1    1    1     1    
-## # … with 53 more rows, and 9 more variables: OQ07 &lt;dbl&gt;, OQ08 &lt;dbl&gt;, Q1 &lt;dbl&gt;,
-## #   Q2 &lt;dbl&gt;, Q3 &lt;dbl&gt;, Q4 &lt;dbl&gt;, Q5 &lt;dbl&gt;, Q6 &lt;dbl&gt;, E &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># SMI_2018_marks  &lt;- </span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="co">#   get_prop_df("^E$|^Q", total_row = 1)</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co"># SMI_2018_marks</span></a></code></pre></div>
 </div>
 <div id="get-means" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-means" class="anchor"></a>Get means</h2>
 <p>For each assessment part - assignments and online quizzes, we get the average proportion</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">SMI_<span class="dv">2018</span>_marks<span class="op">$</span>A  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/get_mean.html">get_mean</a></span>(<span class="st">"^A"</span>)</a>
-<a class="sourceLine" id="cb15-4" title="4">SMI_<span class="dv">2018</span>_marks<span class="op">$</span>OQ  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/get_mean.html">get_mean</a></span>(<span class="st">"^OQ"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># SMI_2018_marks$A  &lt;- </span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="co">#   get_mean("^A")</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="co"># SMI_2018_marks$OQ  &lt;- </span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="co">#   get_mean("^OQ")</span></a></code></pre></div>
 </div>
 <div id="convert-to-percent-of-course" class="section level2">
 <h2 class="hasAnchor">
 <a href="#convert-to-percent-of-course" class="anchor"></a>Convert to percent of course</h2>
 <p>So we now have the proportion for the various parts of the course. We need to convert this to proportion of the assessment.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">select</span>(ID, A, OQ, P, E)</a></code></pre></div>
-<pre><code>## # A tibble: 63 x 5
-##    ID         A    OQ     P     E
-##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Totals 1     1     1     1    
-##  2 1      0.967 1     0.924 0.972
-##  3 2      0.929 0.927 0.829 0.915
-##  4 3      0.896 0.781 0.762 0.761
-##  5 4      0.906 0.708 0.829 0.577
-##  6 5      0.881 0.927 0.914 0.521
-##  7 6      0.940 0.917 0.914 0.944
-##  8 7      0.684 0.771 0.886 0.563
-##  9 8      0.926 1     1.02  0.845
-## 10 9      0.968 1     1.02  0.944
-## # … with 53 more rows</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">SMI_<span class="dv">2018</span>_marks  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb18-4" title="4">    <span class="dt">A =</span> A <span class="op">*</span><span class="st"> </span><span class="dv">15</span>, </a>
-<a class="sourceLine" id="cb18-5" title="5">    <span class="dt">OQ =</span> OQ <span class="op">*</span><span class="st"> </span><span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb18-6" title="6">    <span class="dt">P =</span> P <span class="op">*</span><span class="st"> </span><span class="dv">10</span>, </a>
-<a class="sourceLine" id="cb18-7" title="7">    <span class="dt">E =</span> E <span class="op">*</span><span class="st"> </span><span class="dv">70</span></a>
-<a class="sourceLine" id="cb18-8" title="8">  )</a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">select</span>(ID, A, OQ, P, E)</a></code></pre></div>
-<pre><code>## # A tibble: 63 x 5
-##    ID         A    OQ     P     E
-##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Totals  15    5    10     70  
-##  2 1       14.5  5     9.24  68.0
-##  3 2       13.9  4.64  8.29  64.1
-##  4 3       13.4  3.91  7.62  53.2
-##  5 4       13.6  3.54  8.29  40.4
-##  6 5       13.2  4.64  9.14  36.5
-##  7 6       14.1  4.58  9.14  66.1
-##  8 7       10.3  3.85  8.86  39.4
-##  9 8       13.9  5    10.2   59.2
-## 10 9       14.5  5    10.2   66.1
-## # … with 53 more rows</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co">#   select(ID, A, OQ, P, E)</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># SMI_2018_marks  &lt;- </span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="co">#   mutate(</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="co">#     A = A * 15, </span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="co">#     OQ = OQ * 5,</span></a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="co">#     P = P * 10, </span></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="co">#     E = E * 70</span></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="co">#   )</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="co">#   select(ID, A, OQ, P, E)</span></a></code></pre></div>
 </div>
 <div id="get-course-total" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-course-total" class="anchor"></a>Get course total</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">SMI_<span class="dv">2018</span>_marks<span class="op">$</span>Total  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/get_total.html">get_total</a></span>(<span class="st">"^A$|^OQ$|^P$|^E$"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span><span class="kw">select</span>(ID, A, OQ, P, E, Total)</a></code></pre></div>
-<pre><code>## # A tibble: 63 x 6
-##    ID         A    OQ     P     E Total
-##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Totals  15    5    10     70   100  
-##  2 1       14.5  5     9.24  68.0  96.8
-##  3 2       13.9  4.64  8.29  64.1  90.9
-##  4 3       13.4  3.91  7.62  53.2  78.2
-##  5 4       13.6  3.54  8.29  40.4  65.8
-##  6 5       13.2  4.64  9.14  36.5  63.5
-##  7 6       14.1  4.58  9.14  66.1  93.9
-##  8 7       10.3  3.85  8.86  39.4  62.4
-##  9 8       13.9  5    10.2   59.2  88.2
-## 10 9       14.5  5    10.2   66.1  95.8
-## # … with 53 more rows</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># SMI_2018_marks$Total  &lt;- </span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="co">#   get_total("^A$|^OQ$|^P$|^E$")</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="co">#   select(ID, A, OQ, P, E, Total)</span></a></code></pre></div>
 </div>
 <div id="get-grades" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-grades" class="anchor"></a>Get grades</h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">SMI_<span class="dv">2018</span>_marks<span class="op">$</span>grade  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_grades.html">get_grades</a></span>(SMI_<span class="dv">2018</span>_marks<span class="op">$</span>Total, <span class="dt">trace =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 7 x 3
-##   grade lower upper
-##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 FNS       0     0
-## 2 FNA       1    44
-## 3 FA       45    49
-## 4 P        50    64
-## 5 C        65    74
-## 6 D        75    84
-## 7 HD       85   100</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">select</span>(ID, A, OQ, P, E, Total, grade)</a></code></pre></div>
-<pre><code>## # A tibble: 63 x 7
-##    ID         A    OQ     P     E Total grade
-##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;
-##  1 Totals  15    5    10     70   100   HD   
-##  2 1       14.5  5     9.24  68.0  96.8 HD   
-##  3 2       13.9  4.64  8.29  64.1  90.9 HD   
-##  4 3       13.4  3.91  7.62  53.2  78.2 D    
-##  5 4       13.6  3.54  8.29  40.4  65.8 C    
-##  6 5       13.2  4.64  9.14  36.5  63.5 P    
-##  7 6       14.1  4.58  9.14  66.1  93.9 HD   
-##  8 7       10.3  3.85  8.86  39.4  62.4 P    
-##  9 8       13.9  5    10.2   59.2  88.2 HD   
-## 10 9       14.5  5    10.2   66.1  95.8 HD   
-## # … with 53 more rows</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># SMI_2018_marks$grade  &lt;- get_grades(SMI_2018_marks$Total, trace = TRUE)</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="co">#   select(ID, A, OQ, P, E, Total, grade)</span></a></code></pre></div>
 <p>Finally we can get rid of the totals column</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">SMI_<span class="dv">2018</span>_marks  &lt;-<span class="st"> </span>SMI_<span class="dv">2018</span>_marks[<span class="op">-</span><span class="dv">1</span>, ]</a>
-<a class="sourceLine" id="cb28-2" title="2">SMI_<span class="dv">2018</span>_marks</a></code></pre></div>
-<pre><code>## # A tibble: 62 x 26
-##    ID       A1    A2    A3    A4    A5     P  OQ01  OQ02  OQ03  OQ04  OQ05  OQ06
-##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 1     0.973 1     0.917 0.969 0.978  9.24 1     1       1    1    1     1    
-##  2 2     1     0.905 0.95  0.878 0.913  8.29 1     1       1    0.75 0.667 1    
-##  3 3     1     0.929 0.967 0.694 0.891  7.62 1     1       0.5  0.75 0.667 0.333
-##  4 4     1     0.929 0.983 0.663 0.957  8.29 1     1       0    0    0.667 1    
-##  5 5     1     0.929 0.833 0.776 0.870  9.14 1     1       1    0.75 1     1    
-##  6 6     0.973 0.905 1     0.929 0.891  9.14 0.833 1       0.5  1    1     1    
-##  7 7     0     0.929 0.783 0.837 0.870  8.86 1     0.667   0.5  1    0.667 0.333
-##  8 8     0.865 0.976 0.967 0.867 0.957 10.2  1     1       1    1    1     1    
-##  9 9     0.932 0.952 1     1     0.957 10.2  1     1       1    1    1     1    
-## 10 10    0.973 0.988 1     1     0.978  9.24 1     1       1    1    1     1    
-## # … with 52 more rows, and 13 more variables: OQ07 &lt;dbl&gt;, OQ08 &lt;dbl&gt;, Q1 &lt;dbl&gt;,
-## #   Q2 &lt;dbl&gt;, Q3 &lt;dbl&gt;, Q4 &lt;dbl&gt;, Q5 &lt;dbl&gt;, Q6 &lt;dbl&gt;, E &lt;dbl&gt;, A &lt;dbl&gt;,
-## #   OQ &lt;dbl&gt;, Total &lt;dbl&gt;, grade &lt;fct&gt;</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># SMI_2018_marks  &lt;- SMI_2018_marks[-1, ]</span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="co"># SMI_2018_marks</span></a></code></pre></div>
 </div>
 </div>
 <div id="examine-the-course" class="section level1">
@@ -368,40 +253,28 @@
 <h2 class="hasAnchor">
 <a href="#grades" class="anchor"></a>Grades</h2>
 <p>We can get a summary of each grade for the grade roster summary with</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw"><a href="../reference/get_grade_summary.html">get_grade_summary</a></span>(SMI_<span class="dv">2018</span>_marks<span class="op">$</span>grade)</a></code></pre></div>
-<pre><code>## # A tibble: 6 x 4
-##   grade     n     N  Prop
-##   &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
-## 1 FNA       5    62  0.08
-## 2 FA        4    62  0.06
-## 3 P        16    62  0.26
-## 4 C         7    62  0.11
-## 5 D        11    62  0.18
-## 6 HD       19    62  0.31</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># get_grade_summary(SMI_2018_marks$grade)</span></a></code></pre></div>
 </div>
 <div id="plot-assessment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-assessment" class="anchor"></a>Plot assessment</h2>
 <p>First we can look at individual students breakdown for each section of the course with the <code><a href="../reference/plot_assessment.html">plot_assessment()</a></code> plot.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb32-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/plot_assessment.html">plot_assessment</a></span>(<span class="dt">RE =</span> <span class="st">"^A$|^OQ$|^P$|^E$"</span>, </a>
-<a class="sourceLine" id="cb32-3" title="3">                  <span class="dt">name =</span> ID, </a>
-<a class="sourceLine" id="cb32-4" title="4">                  <span class="dt">grade =</span> grade)</a></code></pre></div>
-<p><img src="analyis-marks_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="co">#   plot_assessment(RE = "^A$|^OQ$|^P$|^E$", </span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="co">#                   name = ID, </span></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="co">#                   grade = grade)</span></a></code></pre></div>
 </div>
 <div id="exam-plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#exam-plot" class="anchor"></a>Exam plot</h2>
 <p>To assess if the exam worked, then we can look at the separation for each question and also the average mark.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/profile_plot.html">profile_plot</a></span>(<span class="dt">RE =</span> <span class="st">"^Q"</span>, </a>
-<a class="sourceLine" id="cb33-3" title="3">               <span class="dt">grade =</span> grade)</a></code></pre></div>
-<p><img src="analyis-marks_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="co">#   profile_plot(RE = "^Q", </span></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="co">#                grade = grade)</span></a></code></pre></div>
 <p>This can also be used for other parts of the course</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/profile_plot.html">profile_plot</a></span>(<span class="dt">RE =</span> <span class="st">"^A</span><span class="ch">\\</span><span class="st">d"</span>, </a>
-<a class="sourceLine" id="cb34-3" title="3">               <span class="dt">grade =</span> grade)</a></code></pre></div>
-<p><img src="analyis-marks_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="co">#   profile_plot(RE = "^A\\d", </span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="co">#                grade = grade)</span></a></code></pre></div>
 </div>
 </div>
 <div id="normalisation" class="section level1">
@@ -411,158 +284,78 @@
 <h2 class="hasAnchor">
 <a href="#glonek-function" class="anchor"></a>Glonek function</h2>
 <p>This normalisation works on the logit scale</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">tibble</span>(<span class="dt">raw =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, </a>
-<a class="sourceLine" id="cb35-2" title="2">           <span class="dt">norm =</span> <span class="kw"><a href="../reference/norm_glonek.html">norm_glonek</a></span>(raw, <span class="dt">a =</span> <span class="fl">0.5</span>, <span class="dt">b =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(raw, norm)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
-<p><img src="analyis-marks_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># tibble(raw = 0:100, </span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="co">#            norm = norm_glonek(raw, a = 0.5, b = 2)) %&gt;% </span></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="co">#   ggplot(aes(raw, norm)) + </span></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="co">#   geom_point()</span></a></code></pre></div>
 <p>Applying this to the SMI dataset we get</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">SMI_<span class="dv">2018</span>_marks  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb36-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb36-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">norm =</span> <span class="kw"><a href="../reference/norm_glonek.html">norm_glonek</a></span>(Total, <span class="dt">a =</span> <span class="fl">0.2</span>, <span class="dt">b =</span> <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co"># SMI_2018_marks  &lt;- </span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="co">#   mutate(norm = norm_glonek(Total, a = 0.2, b = 2))</span></a></code></pre></div>
 </div>
 <div id="linear-interpolation-function" class="section level2">
 <h2 class="hasAnchor">
 <a href="#linear-interpolation-function" class="anchor"></a>Linear interpolation function</h2>
 <p>For this method, we give some boundary points, for example, assume that we would like to map a mark of 25 to 50, and a mark of 75 to 90.</p>
 <p>First we set up the boundaries.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">boundary_pts  &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
-<a class="sourceLine" id="cb37-2" title="2">  <span class="op">~</span>x, <span class="op">~</span>y, </a>
-<a class="sourceLine" id="cb37-3" title="3">  <span class="dv">25</span>, <span class="dv">50</span>, </a>
-<a class="sourceLine" id="cb37-4" title="4">  <span class="dv">75</span>, <span class="dv">90</span></a>
-<a class="sourceLine" id="cb37-5" title="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># boundary_pts  &lt;- tribble(</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="co">#   ~x, ~y, </span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="co">#   25, 50, </span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="co">#   75, 90</span></a>
+<a class="sourceLine" id="cb26-5" title="5"><span class="co"># )</span></a></code></pre></div>
 <p>It will not let you scale down. Next we will illustrate the norm on the marks 0 - 100:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">df  &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb38-2" title="2">  <span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb38-3" title="3">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb38-5" title="5">    <span class="dt">y =</span> <span class="kw"><a href="../reference/norm_linear_inter.html">norm_linear_inter</a></span>(x, <span class="dt">boundary_pts =</span> boundary_pts)</a>
-<a class="sourceLine" id="cb38-6" title="6">)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co"># df  &lt;- tibble(</span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="co">#   x = 0:100</span></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="co"># ) %&gt;% </span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="co">#   mutate(</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="co">#     y = norm_linear_inter(x, boundary_pts = boundary_pts)</span></a>
+<a class="sourceLine" id="cb27-6" title="6"><span class="co"># )</span></a></code></pre></div>
 <p>And plot the results</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> boundary_pts, <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">"BP"</span>))</a></code></pre></div>
-<p><img src="analyis-marks_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># df %&gt;% ggplot(aes(x, y)) + geom_point() + </span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="co">#   geom_point(data = boundary_pts, aes(col = "BP"))</span></a></code></pre></div>
 </div>
 <div id="comparing-norm" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparing-norm" class="anchor"></a>Comparing norm</h2>
 <p>We can compare the raw and norm</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw"><a href="../reference/norm_compare.html">norm_compare</a></span>(SMI_<span class="dv">2018</span>_marks<span class="op">$</span>Total, SMI_<span class="dv">2018</span>_marks<span class="op">$</span>norm)</a></code></pre></div>
-<pre><code>## # A tibble: 6 x 7
-##   raw_grade   FNA    FA     P     C     D    HD
-##   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 FNA           5     0     0     0     0     0
-## 2 FA            0     2     2     0     0     0
-## 3 P             0     0     8     4     4     0
-## 4 C             0     0     0     0     3     4
-## 5 D             0     0     0     0     0    11
-## 6 HD            0     0     0     0     0    19</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># norm_compare(SMI_2018_marks$Total, SMI_2018_marks$norm)</span></a></code></pre></div>
 </div>
 <div id="mccann-spike" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mccann-spike" class="anchor"></a>McCann spike</h2>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">df  &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb42-2" title="2">  <span class="dt">total =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb42-3" title="3">)</a>
-<a class="sourceLine" id="cb42-4" title="4">df  &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">norm_total =</span> <span class="kw"><a href="../reference/add_mccann_spike.html">add_mccann_spike</a></span>(total))</a>
-<a class="sourceLine" id="cb42-6" title="6">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(total, norm_total)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
-<p><img src="analyis-marks_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw"><a href="../reference/norm_compare.html">norm_compare</a></span>(df<span class="op">$</span>total, df<span class="op">$</span>norm_total)</a></code></pre></div>
-<pre><code>## # A tibble: 6 x 7
-##   raw_grade   FNA    FA     P     C     D    HD
-##   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 FNA          44     0     0     0     0     0
-## 2 FA            0     4     1     0     0     0
-## 3 P             0     0    14     1     0     0
-## 4 C             0     0     0     9     1     0
-## 5 D             0     0     0     0     9     1
-## 6 HD            0     0     0     0     0    16</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co"># df  &lt;- tibble(</span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="co">#   total = 1:100</span></a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="co"># )</span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="co"># df  &lt;- df %&gt;% </span></a>
+<a class="sourceLine" id="cb30-5" title="5"><span class="co">#   mutate(norm_total = add_mccann_spike(total))</span></a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="co"># df %&gt;% ggplot(aes(total, norm_total)) + geom_point()</span></a>
+<a class="sourceLine" id="cb30-7" title="7"><span class="co"># norm_compare(df$total, df$norm_total)</span></a></code></pre></div>
 </div>
 </div>
 <div id="check-enrolled-" class="section level1">
 <h1 class="hasAnchor">
 <a href="#check-enrolled-" class="anchor"></a>Check enrolled.</h1>
 <p>You can get the student IDs from the grade roster with</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">grade_roster  &lt;-<span class="st"> </span><span class="kw">read_lines</span>(<span class="st">"../inst/grade_example.csv"</span>)</a>
-<a class="sourceLine" id="cb45-2" title="2">grade_roster</a></code></pre></div>
-<pre><code>##  [1] "COURSE GRADE ROSTER,,,,,,,,,,,"                                                                                                                              
-##  [2] "Date:,21-Jun-19,,,,,,,,,,"                                                                                                                                   
-##  [3] "Oprid:,a1120722,,,,,,,,,,"                                                                                                                                   
-##  [4] "Subject:,STATS,,,,,,,,,,"                                                                                                                                    
-##  [5] "Catalog Nbr:,7014,,,,,,,,,,"                                                                                                                                 
-##  [6] "Term:,3910,,,,,,,,,,"                                                                                                                                        
-##  [7] ",,,,,,,,,,,"                                                                                                                                                 
-##  [8] "EmplID,Last Name,First Name,Middle Name,Class Nbr,Approval Status,Grade Roster Type,Mark/Grade Input,Transcript Note ID,Transcript Note,Term,Academic Career"
-##  [9] "1,A,aa, ,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                              
-## [10] "2,B,bb,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [11] "3,C,cc,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [12] "4,D,dd, ,13482,Not Review,Final, , ,,3910,NAWD"                                                                                                              
-## [13] "5,E,ee,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [14] "6,F,ff,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [15] "7,G,gg,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [16] "8,H,gg,,13482,Not Review,Final, , ,,3910,PGRS"</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/get_enrolled.html">get_enrolled</a></span>(<span class="st">"../inst/grade_example.csv"</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 8 x 4
-##   EmplID `Last Name` `First Name` `Middle Name`
-##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;lgl&gt;        
-## 1      1 A           aa           NA           
-## 2      2 B           bb           NA           
-## 3      3 C           cc           NA           
-## 4      4 D           dd           NA           
-## 5      5 E           ee           NA           
-## 6      6 F           ff           NA           
-## 7      7 G           gg           NA           
-## 8      8 H           gg           NA</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># grade_roster  &lt;- read_lines("../inst/grade_example.csv")</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="co"># grade_roster</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="co"># get_enrolled("../inst/grade_example.csv")</span></a></code></pre></div>
 </div>
 <div id="grade-rosters" class="section level1">
 <h1 class="hasAnchor">
 <a href="#grade-rosters" class="anchor"></a>Grade rosters</h1>
 <p>The function <code><a href="../reference/fill_grade_roster.html">fill_grade_roster()</a></code> will put the marks into the blank grade roster.</p>
 <p>For this example, we have a grade roster</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">grade_roster  &lt;-<span class="st"> </span><span class="kw">read_lines</span>(<span class="st">"../inst/grade_example.csv"</span>)</a>
-<a class="sourceLine" id="cb49-2" title="2">grade_roster</a></code></pre></div>
-<pre><code>##  [1] "COURSE GRADE ROSTER,,,,,,,,,,,"                                                                                                                              
-##  [2] "Date:,21-Jun-19,,,,,,,,,,"                                                                                                                                   
-##  [3] "Oprid:,a1120722,,,,,,,,,,"                                                                                                                                   
-##  [4] "Subject:,STATS,,,,,,,,,,"                                                                                                                                    
-##  [5] "Catalog Nbr:,7014,,,,,,,,,,"                                                                                                                                 
-##  [6] "Term:,3910,,,,,,,,,,"                                                                                                                                        
-##  [7] ",,,,,,,,,,,"                                                                                                                                                 
-##  [8] "EmplID,Last Name,First Name,Middle Name,Class Nbr,Approval Status,Grade Roster Type,Mark/Grade Input,Transcript Note ID,Transcript Note,Term,Academic Career"
-##  [9] "1,A,aa, ,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                              
-## [10] "2,B,bb,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [11] "3,C,cc,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [12] "4,D,dd, ,13482,Not Review,Final, , ,,3910,NAWD"                                                                                                              
-## [13] "5,E,ee,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [14] "6,F,ff,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [15] "7,G,gg,,13482,Not Review,Final, , ,,3910,PGRS"                                                                                                               
-## [16] "8,H,gg,,13482,Not Review,Final, , ,,3910,PGRS"</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co"># grade_roster  &lt;- read_lines("../inst/grade_example.csv")</span></a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="co"># grade_roster</span></a></code></pre></div>
 <p>Also we need the totals to be rounded</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">SMI_<span class="dv">2018</span>_marks  &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb51-2" title="2"><span class="st">  </span>SMI_<span class="dv">2018</span>_marks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Total =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(Total))</a></code></pre></div>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw"><a href="../reference/fill_grade_roster.html">fill_grade_roster</a></span>(SMI_<span class="dv">2018</span>_marks<span class="op">$</span>ID, SMI_<span class="dv">2018</span>_marks<span class="op">$</span>Total, </a>
-<a class="sourceLine" id="cb52-2" title="2">                  <span class="dt">infile =</span> <span class="st">"../inst/grade_example.csv"</span>, </a>
-<a class="sourceLine" id="cb52-3" title="3">                  <span class="dt">outfile =</span> <span class="st">"../inst/example_output.csv"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">grade_roster  &lt;-<span class="st"> </span><span class="kw">read_lines</span>(<span class="st">"../inst/example_output.csv"</span>)</a>
-<a class="sourceLine" id="cb53-2" title="2">grade_roster</a></code></pre></div>
-<pre><code>##  [1] "COURSE GRADE ROSTER,,,,,,,,,,,"                                                                                                                              
-##  [2] "Date:,21-Jun-19,,,,,,,,,,"                                                                                                                                   
-##  [3] "Oprid:,a1120722,,,,,,,,,,"                                                                                                                                   
-##  [4] "Subject:,STATS,,,,,,,,,,"                                                                                                                                    
-##  [5] "Catalog Nbr:,7014,,,,,,,,,,"                                                                                                                                 
-##  [6] "Term:,3910,,,,,,,,,,"                                                                                                                                        
-##  [7] ",,,,,,,,,,,"                                                                                                                                                 
-##  [8] "EmplID,Last Name,First Name,Middle Name,Class Nbr,Approval Status,Grade Roster Type,Mark/Grade Input,Transcript Note ID,Transcript Note,Term,Academic Career"
-##  [9] "1,A,aa,,13482,Not Review,Final,97,,,3910,PGRS"                                                                                                               
-## [10] "2,B,bb,,13482,Not Review,Final,91,,,3910,PGRS"                                                                                                               
-## [11] "3,C,cc,,13482,Not Review,Final,78,,,3910,PGRS"                                                                                                               
-## [12] "4,D,dd,,13482,Not Review,Final,66,,,3910,NAWD"                                                                                                               
-## [13] "5,E,ee,,13482,Not Review,Final,63,,,3910,PGRS"                                                                                                               
-## [14] "6,F,ff,,13482,Not Review,Final,94,,,3910,PGRS"                                                                                                               
-## [15] "7,G,gg,,13482,Not Review,Final,62,,,3910,PGRS"                                                                                                               
-## [16] "8,H,gg,,13482,Not Review,Final,88,,,3910,PGRS"</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co"># SMI_2018_marks  &lt;- </span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="co">#   SMI_2018_marks %&gt;% </span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="co">#   mutate(Total = round(Total))</span></a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># fill_grade_roster(SMI_2018_marks$ID, SMI_2018_marks$Total, </span></a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="co">#                   infile = "../inst/grade_example.csv", </span></a>
+<a class="sourceLine" id="cb34-3" title="3"><span class="co">#                   outfile = "../inst/example_output.csv")</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="co"># grade_roster  &lt;- read_lines("../inst/example_output.csv")</span></a>
+<a class="sourceLine" id="cb35-2" title="2"><span class="co"># grade_roster</span></a></code></pre></div>
 <p>Open, check and save a correct CSV form.</p>
 <p>It automatically adds <code>FNS</code> if mark is 0 and also <code>US10</code> for marks between 45 and 49, this can be changed for first year courses.</p>
 <p>Also you can pass in a vector of IDs that have a RP mark, e.g., pending a plagiarism decision.</p>
@@ -571,20 +364,7 @@
 <h1 class="hasAnchor">
 <a href="#auditing" class="anchor"></a>Auditing</h1>
 <p>This function asked for by Barry will run a audit on all students with a few marks of a boundary. The default is one mark for the boundaries 50, 65, 75, and 85.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw"><a href="../reference/run_audit.html">run_audit</a></span>(SMI_<span class="dv">2018</span>_marks, Total)</a></code></pre></div>
-<pre><code>## # A tibble: 7 x 27
-##   ID       A1    A2    A3    A4    A5     P  OQ01  OQ02  OQ03  OQ04  OQ05  OQ06
-##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 37    0.743 0.631 0.683 0.449 0.348  8.48 0.667 0.333   0.5  0.75 0.667 0.333
-## 2 4     1     0.929 0.983 0.663 0.957  8.29 1     1       0    0    0.667 1    
-## 3 31    0.797 0.583 0.817 0.541 0.522  7.62 1     1       0.5  1    1     0    
-## 4 22    0.986 0.976 0.867 0.939 0.891  9.24 1     1       0.5  1    1     0.333
-## 5 25    0.892 0.964 0.9   0.857 0.978  8.86 1     1       1    1    0.667 0.667
-## 6 32    0.919 0.869 0.95  0.929 0.924  8.76 1     1       0.5  1    0.667 1    
-## 7 42    0.973 1     0.983 1     0.978  8.86 1     1       1    1    1     1    
-## # … with 14 more variables: OQ07 &lt;dbl&gt;, OQ08 &lt;dbl&gt;, Q1 &lt;dbl&gt;, Q2 &lt;dbl&gt;,
-## #   Q3 &lt;dbl&gt;, Q4 &lt;dbl&gt;, Q5 &lt;dbl&gt;, Q6 &lt;dbl&gt;, E &lt;dbl&gt;, A &lt;dbl&gt;, OQ &lt;dbl&gt;,
-## #   Total &lt;dbl&gt;, grade &lt;fct&gt;, norm &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="co"># run_audit(SMI_2018_marks, Total)</span></a></code></pre></div>
 </div>
 <div id="exam-report" class="section level1">
 <h1 class="hasAnchor">

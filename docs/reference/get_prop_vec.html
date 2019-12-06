@@ -92,7 +92,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/Case_study.html">Case study</a>
+    </li>
+    <li>
+      <a href="../articles/admin.html">Exam admin</a>
+    </li>
+    <li>
       <a href="../articles/analyis-marks.html">Analysing course marks: an example</a>
+    </li>
+    <li>
+      <a href="../articles/exam_report.html">Exam report</a>
+    </li>
+    <li>
+      <a href="../articles/normalization.html">Scaling data</a>
     </li>
   </ul>
 </li>
@@ -136,26 +148,12 @@
 
     <p>vector of proportions.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>examMarking</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"SMI_2018_marks"</span>)
-<span class='no'>SMI_2018_marks</span>  <span class='kw'>&lt;-</span> <span class='no'>SMI_2018_marks</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='clean_marks_df.html'>clean_marks_df</a></span>(<span class='st'>"^A"</span>)
-<span class='fu'>get_prop_vec</span>(<span class='no'>SMI_2018_marks</span>$<span class='no'>`Assignment 1 (77417)`</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt;  [1] 1.0000000 0.9729730 1.0000000 1.0000000 1.0000000 1.0000000 0.9729730
-#&gt;  [8] 0.0000000 0.8648649 0.9324324 0.9729730 0.7837838 0.8243243        NA
-#&gt; [15] 0.8918919 1.0000000 1.0000000 1.0000000 0.8783784 1.0000000 0.4324324
-#&gt; [22] 0.9729730 0.9864865 1.0000000 0.9189189 0.8918919 1.0000000 1.0000000
-#&gt; [29] 0.8648649 1.0000000 0.8783784 0.7972973 0.9189189 0.9189189 1.0000000
-#&gt; [36] 1.0000000 1.0000000 0.7432432 0.9594595 0.0000000 0.9459459 0.8513514
-#&gt; [43] 0.9729730 0.9459459 0.8243243 0.9594595        NA 1.0000000 0.0000000
-#&gt; [50] 0.9594595 0.6216216 0.9864865 0.9189189 1.0000000 0.0000000 1.0000000
-#&gt; [57] 0.5945946 0.9189189 0.4864865 0.9459459 0.9189189 0.9189189 0.8648649</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

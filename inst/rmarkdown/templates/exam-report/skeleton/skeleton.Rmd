@@ -10,13 +10,14 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-pacman::p_load(tidyverse, examMarking)
+pacman::p_load(tidyverse, examMarkR)
 theme_set(theme_bw())
 ```
 
 ```{r, include=FALSE}
 # Get the data
-data("SMI_2018_marks_clean")
+data("marks")
+marks
 ```
 
 # Grade summary
@@ -24,21 +25,20 @@ data("SMI_2018_marks_clean")
 ## Table
 
 ```{r}
-get_grade_summary(SMI_2018_marks_clean$grade) %>% 
-  knitr::kable()
+marks
+marks %>% exam_grade_summary(grade) %>% knitr::kable()
 ```
 
 ## Bar-chart
 
 ```{r}
-SMI_2018_marks_clean %>% ggplot(aes(grade, fill = grade)) + geom_bar(show.legend = FALSE)
+marks %>% exam_plot_grades(grade)
 ```
 
 # Exam
 
 ```{r}
-SMI_2018_marks_clean %>% 
-  profile_plot("^Q", grade)
+marks %>% exam_plot_profile("^Q", grade)
 ```
 
 # Scaling
@@ -48,10 +48,10 @@ SMI_2018_marks_clean %>%
 Discussion of method used. 
 
 ```{r}
-SMI_2018_marks_clean <- 
-  SMI_2018_marks_clean %>% 
+marks  <- 
+  marks %>% 
   mutate(
-    norm_mark  = norm_glonek(Total, a = 0.5, b = 1)
+    norm = exam_norm_glonek(total, a = 0.5, b = 1.1)
   )
 ```
 
@@ -59,13 +59,11 @@ SMI_2018_marks_clean <-
 ## Results
 
 ```{r}
-norm_compare(SMI_2018_marks_clean$Total, 
-             SMI_2018_marks_clean$norm_mark) %>% 
-  knitr::kable()
+marks %>% exam_compare_norm(total, norm) %>% knitr::kable()
 ```
 
 ```{r}
-plot_norm(SMI_2018_marks_clean, Total, norm_mark, ID)
+marks %>% exam_plot_norm(total, norm)
 ```
 
 

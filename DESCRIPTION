@@ -3,7 +3,8 @@ Type: Package
 Title: code for exam marking
 Version: 0.1.0
 Authors@R: person("Jono", "Tuke", email = "jonotuke@gmail.com",
-                      role = c("aut", "cre"))
+                      role = c("aut", "cre"), 
+                      comment = c(ORCID = "0000-0002-1688-8951"))
 Description: code to normalise and access exam marks
 License: GPL-3
 Encoding: UTF-8

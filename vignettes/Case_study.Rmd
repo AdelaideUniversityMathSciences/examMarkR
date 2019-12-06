@@ -1,0 +1,172 @@
+---
+title: "Case study"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Case_study}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(examMarkR)
+library(tidyverse)
+```
+
+# Getting data
+
+In this case, we have some built in raw data that we will use:
+
+```{r}
+raw_data
+```
+
+The form of the data is a row for each  student with 
+
+- Student ID, 
+- Assignment1 to  Assignment 5, 
+- Project,
+- Online quizzes Model selection to ANCOVA, and 
+- Exam questions Q1 to Q6. 
+
+# Cleaning the data
+
+## Rename columns
+
+First we rename the columns
+
+```{r}
+colnames(raw_data)  <- c("ID", 
+                         str_c("A", 1:5), 
+                         "P", 
+                         str_c("OQ0", 1:8), 
+                         str_c("Q", 1:6))
+raw_data
+```
+
+## Exemptions
+
+In canvas any piece of assessment that has not be submitted has a blank cell. When we import this into R, it is represented by an NA. Also any exemptions in canvas are indicated as EX. 
+
+We would like to set missing marks to 0, and then exemptions to missing. This way any exemption will not be incorporated into the final mark. 
+
+The function to do this is 
+
+```{r}
+marks  <- 
+  raw_data %>% 
+  exam_canvas_clean("^A|^P|^OQ|^Q")
+marks
+```
+
+This function takes a data frame and  a regular expression. In this case we choose all  columns that start with an  A, or a P, or OQ, or Q. 
+
+# Consolidate marks
+
+## Get totals
+
+For the exam, we have the marks for each question, but not the total exam mark. We will add this. 
+
+```{r}
+marks  <- 
+  marks %>% 
+  mutate(
+    E = exam_calculate_total(marks, "^Q")
+  )
+marks
+```
+
+
+## Convert to proportions
+
+First, we will convert all of the marks to proportions. This is done with `exam_calculate_prop()`. Again this takes a data frame and a regular expression. It also assumes that one of the rows has the totals. 
+
+```{r}
+marks  <- 
+  marks %>% 
+  exam_calculate_prop("^A|^P|^OQ|^Q|E", 1)
+marks
+```
+
+## Get mean proportion
+
+For the assignments and online quizzes, we will now get the mean proportion. 
+
+```{r}
+marks  <- 
+  marks %>% 
+  mutate(
+    A = exam_calculate_mean(marks, "^A"), 
+    OQ = exam_calculate_mean(marks, "^OQ"))
+marks
+```
+
+## Convert to percentage of course
+
+So in this course, we have the following percentages
+
+- exam 70%
+- assignment 20%
+- online quizzes 5%, and 
+- project 5%. 
+
+```{r}
+marks  <- 
+  marks %>% 
+  mutate(
+    E_70 = E * 70, 
+    A_20 = A * 20, 
+    OQ_5 = OQ * 5, 
+    P_5 = P * 5
+  )
+marks
+```
+
+## Get total for course
+
+Get total and also round. 
+
+```{r}
+marks  <- 
+  marks %>% 
+  mutate(
+    total = E_70 + A_20 + OQ_5 + P_5, 
+    total = round(total))
+marks
+```
+
+
+## Grading
+
+The grading scale is 
+
+```{r, echo=FALSE}
+grade_tab <- tibble(
+  grade = c("FNS","FNA","FA","P","C","D","HD"),
+  lower = c(0, 1,  45, 50, 65, 75, 85),
+  upper = c(0, 44, 49, 64, 74, 84, 100)
+)
+grade_tab %>% knitr::kable()
+```
+
+We get this with the function `exam_grade()`. You can pass your own grade table. As well, if you set `first_year = TRUE`, it set Academic RAA to 40-49 rather than the usual 45-49. 
+
+```{r}
+marks  <- 
+  marks %>% 
+  mutate(
+    grade = exam_grade(total)
+  )
+marks
+```
+
+```{r, include = FALSE}
+usethis::use_data(marks, overwrite = TRUE)
+```
+

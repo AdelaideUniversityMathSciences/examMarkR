@@ -2,5 +2,9 @@ pandoc: '2.5'
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
+  Case_study: Case_study.html
+  admin: admin.html
   analyis-marks: analyis-marks.html
+  exam_report: exam_report.html
+  normalization: normalization.html
 

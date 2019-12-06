@@ -1,0 +1,163 @@
+---
+title: "Scaling data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{normalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  out.width = '100%', 
+  fig.align = 'center', 
+  fig.width = 10, 
+  fig.height = 10
+)
+```
+
+```{r setup}
+pacman::p_load(tidyverse, examMarkR)
+```
+
+# Type of normalisation
+
+In the package, we have three scaling methods so far:
+
+- the Glonek function, 
+- linear scaling - also gives tenting, and 
+- McCann spike. 
+
+## Glonek function
+
+The Glonek function scales on a logit score
+
+Let $x_i$ be the raw mark of the $i$th student, then the steps are
+
+1. 
+$$
+y_i = \log\left(\frac{x_i}{100 - x_i}\right)
+$$
+2. 
+$$
+y_i^{scale} = a + b\times y_i
+$$
+3. 
+$$
+x_i^{scale} = \frac{100e^{y_i^{scale}}}{1 + e^{y_i^{scale}}}
+$$
+
+So the two parameters are $a$ and $b$. Examples are given below. 
+
+```{r}
+df  <- tibble(
+  raw = 0:100, 
+  `a = 0.5, b = 1.1` = exam_norm_glonek(raw, 0.5, 1.1),
+  `a = 0.5, b = 1.5` = exam_norm_glonek(raw, 0.5, 1.5),
+  `a = 0.5, b = 0.9` = exam_norm_glonek(raw, 0.5, 0.9)
+)
+df %>% 
+  pivot_longer(-raw) %>% 
+  ggplot(aes(raw, value, col = name)) + 
+  geom_point() + 
+  geom_segment(aes(x = 0, xend = 100, y = 0, yend = 100), col = 'black') + 
+  labs(col = "Parameters")
+```
+
+## Linear scaling
+
+In linear scaling, you give a set of boundary points of the form
+
+$$
+(x_j, y_j)
+$$
+where $x_i$ is a raw mark and $y_i$ is the scale mark it is mapped to. We assume that the set of boundary points always have 
+
+$$
+(0,0)\text{ and }(100, 100)
+$$
+
+_this are added automatically by the function_ 
+
+The mapping is for the $i$th raw mark, $x_i$ is then
+
+
+$$
+y_i = y_j + \frac{y_{j+1} - y_j}{x_{j+1} - x_j}\times(x_i - x_j), \text{ for }x_j \le x_i\le x_{j+1},  
+$$
+
+where $y_i$ is the scaled mark for the $i$ student. 
+
+As an example, consider a scaling where
+
+- 45 is mapped to 50, and 
+- 75 is mapped to 90. 
+
+The following code shows how to do this and the resultant marks. 
+
+```{r}
+boundary_pts  <- tribble(
+  ~x, ~y, 
+  45, 50, 
+  75, 80
+)
+df  <- tibble(
+  x = 0:100
+) %>% 
+  mutate(
+    y = exam_norm_linear(x, boundary_pts = boundary_pts)
+  )
+df %>% ggplot(aes(x, y)) + geom_point() + 
+  geom_point(data = boundary_pts, col = 'red') + 
+  geom_segment(aes(x = 0, xend = 100, y = 0, yend = 100))
+```
+
+In the case of tenting, there would be a single boundary point passed through. 
+
+## McCann spike
+
+In this case, we just add one to any mark of 49, 64, 74, or 84.
+
+```{r}
+df  <- tibble(
+  x = 0:100
+) %>% 
+  mutate(
+    y = exam_norm_mccann(x)
+  )
+df %>% ggplot(aes(x, y)) + geom_point() + 
+  geom_segment(aes(x = 0, xend = 100, y = 0, yend = 100))
+```
+
+# Comparing scaled and raw marks
+
+To aid in compring the effect of scaling, there are two functions
+
+## `exam_compare_norm()`
+
+This function takes the column of raw and the column of scaled and gives the grade proportions for each. 
+
+Here is scale using the Glonek with $a = 1$ and $b = 1.1$. 
+
+```{r}
+marks %>% 
+ mutate(norm = exam_norm_glonek(total, a = 1, b = 1.1)) %>% 
+   exam_compare_norm(total, norm) %>% 
+  knitr::kable()
+```
+
+
+## `exam_plot_norm()`
+
+This one give a comparison plot:
+
+```{r}
+marks %>% 
+ mutate(norm = exam_norm_glonek(total, a = 1, b = 1.1)) %>% 
+   exam_plot_norm(raw = total, norm)
+```
+
+
+

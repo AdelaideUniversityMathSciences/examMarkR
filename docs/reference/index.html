@@ -90,7 +90,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/Case_study.html">Case study</a>
+    </li>
+    <li>
+      <a href="../articles/admin.html">Exam admin</a>
+    </li>
+    <li>
       <a href="../articles/analyis-marks.html">Analysing course marks: an example</a>
+    </li>
+    <li>
+      <a href="../articles/exam_report.html">Exam report</a>
+    </li>
+    <li>
+      <a href="../articles/normalization.html">Scaling data</a>
     </li>
   </ul>
 </li>
@@ -137,22 +149,90 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="add_mccann_spike.html">add_mccann_spike()</a></code> </p>
-        </td>
-        <td><p>Add McCann spike to data</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="clean_marks.html">clean_marks()</a></code> </p>
         </td>
         <td><p>takes a vector of marks and converts missing to zero and EX to NA</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="clean_marks_df.html">clean_marks_df()</a></code> </p>
+          <p><code><a href="exam_calculate_mean.html">exam_calculate_mean()</a></code> </p>
+        </td>
+        <td><p>takes data frame and regular expression and calculates the mean for the given 
+columns. Will take into account exemmptions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_calculate_prop.html">exam_calculate_prop()</a></code> </p>
+        </td>
+        <td><p>Get proportions for dataframe.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_calculate_total.html">exam_calculate_total()</a></code> </p>
+        </td>
+        <td><p>takes data frame and regular expression and calculates the totals for the given 
+columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_canvas_clean.html">exam_canvas_clean()</a></code> </p>
         </td>
         <td><p>Takes a data frame of marks and regular expression and converts 
 the columns whose names match regular expression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_compare_norm.html">exam_compare_norm()</a></code> </p>
+        </td>
+        <td><p>Compare raw and norm marks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_grade.html">exam_grade()</a></code> </p>
+        </td>
+        <td><p>convert integer marks to grades</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_grade_summary.html">exam_grade_summary()</a></code> </p>
+        </td>
+        <td><p>Takes column of grades and gives summary</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_norm_glonek.html">exam_norm_glonek()</a></code> </p>
+        </td>
+        <td><p>Normalizes using Glonek function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_norm_linear.html">exam_norm_linear()</a></code> </p>
+        </td>
+        <td><p>Linear interpolation norm</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_norm_mccann.html">exam_norm_mccann()</a></code> </p>
+        </td>
+        <td><p>Add McCann spike to data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_plot_grades.html">exam_plot_grades()</a></code> </p>
+        </td>
+        <td><p>Get grade plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_plot_norm.html">exam_plot_norm()</a></code> </p>
+        </td>
+        <td><p>Plot raw and norm</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exam_plot_profile.html">exam_plot_profile()</a></code> </p>
+        </td>
+        <td><p>Plots the exam questions to look for seperation</p></td>
       </tr><tr>
         
         <td>
@@ -174,41 +254,9 @@ the columns whose names match regular expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_grade_summary.html">get_grade_summary()</a></code> </p>
-        </td>
-        <td><p>Takes column of grades and gives summary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_grades.html">get_grades()</a></code> </p>
-        </td>
-        <td><p>convert integer marks to grades</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_mean.html">get_mean()</a></code> </p>
-        </td>
-        <td><p>takes data frame and regular expression and calculates the mean for the given 
-columns. Will take into account exemmptions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_prop_df.html">get_prop_df()</a></code> </p>
-        </td>
-        <td><p>Get proportions for dataframe.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="get_prop_vec.html">get_prop_vec()</a></code> </p>
         </td>
         <td><p>Calculates the proportion for each mark in a vector.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_total.html">get_total()</a></code> </p>
-        </td>
-        <td><p>takes data frame and regular expression and calculates the totals for the given 
-columns</p></td>
       </tr><tr>
         
         <td>
@@ -218,39 +266,9 @@ columns</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="norm_compare.html">norm_compare()</a></code> </p>
-        </td>
-        <td><p>compare norm</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="norm_glonek.html">norm_glonek()</a></code> </p>
-        </td>
-        <td><p>Normalizes using Glonek function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="norm_linear_inter.html">norm_linear_inter()</a></code> </p>
-        </td>
-        <td><p>Linear interpolation norm</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="plot_assessment.html">plot_assessment()</a></code> </p>
         </td>
         <td><p>Plots the assessment for each student</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_norm.html">plot_norm()</a></code> </p>
-        </td>
-        <td><p>Plot raw and norm</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="profile_plot.html">profile_plot()</a></code> </p>
-        </td>
-        <td><p>Plots the exam questions to look for seperation</p></td>
       </tr><tr>
         
         <td>
