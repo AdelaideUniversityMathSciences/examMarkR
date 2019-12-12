@@ -3,7 +3,7 @@
 #' @param x marks 
 #'
 #' @return vector of marks
-clean_marks  <- function(x){
+exam_clean_marks  <- function(x){
   x[is.na(x)]  <- 0
   x[x=="EX"]  <- NA
   x  <- as.numeric(x)
@@ -23,7 +23,7 @@ clean_marks  <- function(x){
 #' SMI_2018_marks
 #' exam_canvas_clean(SMI_2018_marks, "^A")
 exam_canvas_clean  <- function(df, assess_RE){
-  df  <- dplyr::mutate_at(df, dplyr::vars(dplyr::matches(assess_RE)), clean_marks)
+  df  <- dplyr::mutate_at(df, dplyr::vars(dplyr::matches(assess_RE)), exam_clean_marks)
   return(df)
 }
 

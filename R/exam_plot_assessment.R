@@ -11,18 +11,14 @@
 #' @export
 #'
 #' @examples
-#' library(examMarking)
 #' data("SMI_2018_marks_clean")
 #' SMI_2018_marks_clean %>% 
-#' plot_assessment(RE = "^A$|^OQ$|^P$|^E$", name = ID, grade = grade)
-plot_assessment  <- function(df, RE, name, grade){
-  ## NSE for name and grade
-  name  <- enquo(name)
-  grade  <- enquo(grade)
+#' exam_plot_assessment(RE = "^A$|^OQ$|^P$|^E$", name = ID, grade = grade)
+exam_plot_assessment  <- function(df, RE, name, grade){
   ## Get columns 
   df  <- 
     df %>% 
-    select(matches(RE), name = !!name, grade = !!grade)
+    dplyr::select(dplyr::matches(RE), name = {{name}}, grade = {{grade}})
   # Get the assessment columns
   # Add total 
   df$total  <- df %>% select(-name, -grade) %>% apply(., 1, sum, na.rm = TRUE)
@@ -39,3 +35,7 @@ plot_assessment  <- function(df, RE, name, grade){
     labs(y = "Student") +
     facet_grid(grade ~ ., scales = "free", space = "free")
 }
+
+# data("SMI_2018_marks_clean")
+# SMI_2018_marks_clean %>% 
+# exam_plot_assessment(RE = "^A$|^OQ$|^P$|^E$", name = ID, grade = grade)

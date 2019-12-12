@@ -13,8 +13,9 @@ Imports:
     dplyr,
     magrittr,
     tidyr,
-    ggplot2, 
-    stringr
+    ggplot2,
+    stringr,
+    glue
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,

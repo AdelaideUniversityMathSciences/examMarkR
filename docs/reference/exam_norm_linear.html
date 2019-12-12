@@ -98,7 +98,7 @@
       <a href="../articles/admin.html">Exam admin</a>
     </li>
     <li>
-      <a href="../articles/analyis-marks.html">Analysing course marks: an example</a>
+      <a href="../articles/exam_plotting.html">Exam plotting</a>
     </li>
     <li>
       <a href="../articles/exam_report.html">Exam report</a>
@@ -157,12 +157,14 @@
   ~<span class='no'>x</span>, ~<span class='no'>y</span>,
   <span class='fl'>25</span>, <span class='fl'>50</span>,
   <span class='fl'>75</span>, <span class='fl'>90</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in tribble(~x, ~y, 25, 50, 75, 90): could not find function "tribble"</span></div><div class='input'><span class='no'>df</span>  <span class='kw'>&lt;-</span> <span class='fu'>tibble</span>(
+)
+<span class='no'>df</span>  <span class='kw'>&lt;-</span> <span class='fu'>tibble</span>(
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>0</span>:<span class='fl'>100</span>
 ) <span class='kw'>%&gt;%</span>
   <span class='fu'>mutate</span>(
     <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>exam_norm_linear</span>(<span class='no'>x</span>, <span class='kw'>boundary_pts</span> <span class='kw'>=</span> <span class='no'>boundary_pts</span>)
-  )</div><div class='output co'>#&gt; <span class='error'>Error in tibble(x = 0:100): could not find function "tibble"</span></div><div class='input'><span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='no'>x</span>, <span class='no'>y</span>)) + <span class='fu'>geom_point</span>()</div><div class='output co'>#&gt; <span class='error'>Error in ggplot(., aes(x, y)): could not find function "ggplot"</span></div></pre>
+  )
+<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='no'>x</span>, <span class='no'>y</span>)) + <span class='fu'>geom_point</span>()</div><div class='img'><img src='exam_norm_linear-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

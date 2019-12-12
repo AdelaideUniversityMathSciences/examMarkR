@@ -2,8 +2,11 @@
 #' 
 #' Still need to open, check and save
 #' 
-#' @param IDs vector of IDs
-#' @param total vector of marks - order corresponds to IDs
+#' @author Jono Tuke
+#' 
+#' @param df data frame of marks
+#' @param IDs column of IDs
+#' @param total column with rounded totals
 #' @param infile empty grade roster
 #' @param outfile lace to save complete grade roster
 #'
@@ -11,31 +14,31 @@
 #' @export
 #'
 #' @examples
-#' pacman::p_load(tidyverse, examMarking)
+#' pacman::p_load(tidyverse)
 #' set.seed(2019)
 #' df  <- tibble(
 #'   ID = 1:7,
 #'   total = c(sample(80:100, 4), 0, 49, 44)
 #' )
 #' df
-#' fill_grade_roster(df$ID, df$total,
+#' df %>% exam_fill_grade_roster(ID, total,
 #'                   infile = "inst/grade_example.csv",
 #'                   outfile = "inst/example_output.csv")
 #' read_lines("inst/example_output.csv")
-#' fill_grade_roster(df$ID, df$total,
+#' df %>% exam_fill_grade_roster(ID, total,
 #'                   infile = "inst/grade_example.csv",
 #'                   outfile = "inst/example_output_2.csv",
 #'                   supp = 40:49)
 #' read_lines("inst/example_output_2.csv")
-#' fill_grade_roster(df$ID, df$total,
+#' df %>% exam_fill_grade_roster(ID, total,
 #'                   infile = "inst/grade_example.csv",
 #'                   outfile = "inst/example_output_3.csv",
 #'                   RP = c(2, 5))
 #' read_lines("inst/example_output_3.csv")
-fill_grade_roster  <- function(IDs, total, 
+exam_fill_grade_roster  <- function(df, IDs, total, 
                                infile, outfile, 
                                supp = 45:49, supp_code = "US10", 
-                               RP = NULL){
+                               RP = NULL, trace = TRUE){
   # Read in the grade roster
   grade_roster  <- read_lines(infile)
   # Get header
@@ -46,6 +49,11 @@ fill_grade_roster  <- function(IDs, total,
   n  <- length(grade_roster)
   data  <- grade_roster[8:n]  
   data  <- read_csv(data)
+  # Get IDs
+  IDs  <- df %>% pull({{IDs}})
+  print(IDs)
+  # Get totals
+  total  <- df %>% pull({{total}})
   # Add totals
   for(i in 1:nrow(data)){
     ID  <- data$EmplID[i]
@@ -63,25 +71,28 @@ fill_grade_roster  <- function(IDs, total,
       }
     }
   }
+  if(trace){
+    print(data)
+  }
   write_csv(data, outfile, append = TRUE, na = "", col_names = TRUE)
 }
-# pacman::p_load(tidyverse, examMarking)
+# pacman::p_load(tidyverse)
 # set.seed(2019)
 # df  <- tibble(
 #   ID = 1:7,
 #   total = c(sample(80:100, 4), 0, 49, 44)
 # )
 # df
-# fill_grade_roster(df$ID, df$total,
+# df %>% exam_fill_grade_roster(ID, total,
 #                   infile = "inst/grade_example.csv",
 #                   outfile = "inst/example_output.csv")
 # read_lines("inst/example_output.csv")
-# fill_grade_roster(df$ID, df$total,
+# df %>% exam_fill_grade_roster(ID, total,
 #                   infile = "inst/grade_example.csv",
 #                   outfile = "inst/example_output_2.csv",
 #                   supp = 40:49)
 # read_lines("inst/example_output_2.csv")
-# fill_grade_roster(df$ID, df$total,
+# df %>% exam_fill_grade_roster(ID, total,
 #                   infile = "inst/grade_example.csv",
 #                   outfile = "inst/example_output_3.csv",
 #                   RP = c(2, 5))

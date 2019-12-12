@@ -1,0 +1,72 @@
+---
+title: "Exam plotting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{exam_plotting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  out.width = '100%', 
+  fig.width = 10, 
+  fig.height = 10
+)
+```
+
+```{r setup}
+pacman::p_load(tidyverse, examMarkR)
+```
+
+# Load some data
+
+```{r}
+SMI_2018_marks_clean
+```
+
+# Plots
+
+## `exam_plot_assessment()`
+
+This is the first one. It will give an over view of the assessment parts of a course for each student. 
+
+```{r}
+SMI_2018_marks_clean %>% 
+  exam_plot_assessment("^E$|^A$|^OQ$", name = ID, grade = grade)
+```
+
+## `exam_plot_grades()`
+
+This one gives the proportion for each grade. 
+
+```{r}
+SMI_2018_marks_clean %>% exam_plot_grades(grade)
+```
+
+## `exam_plot_profile()`
+
+This idea of this plot is to examine if the exam works. By this, we want to see two things:
+
+1. Is there a good seperation between the grades in each question of the exam?
+2. Is the average mark - black dots - what you expected from your setting of the question?
+
+```{r}
+SMI_2018_marks_clean %>% exam_plot_profile("^Q", grade)
+```
+
+## `exam_plot_norm()`
+
+The final one is to compare the result from the raw marks and the scaled marks. 
+
+
+```{r}
+SMI_2018_marks_clean %>% 
+  mutate(
+  norm_mark  = exam_norm_linear(Total, tibble(x = 45, y = 50))
+  ) %>% 
+  exam_plot_norm(Total, norm_mark)
+```
+

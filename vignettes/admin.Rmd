@@ -15,5 +15,85 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(examMarkR)
+pacman::p_load(tidyverse, examMarkR)
 ```
+
+To help with the admin of exam marking, there are a few helper functions. 
+
+# Grade roster
+
+The function `fill_grade_roster()` will put the marks into the blank grade roster. 
+
+For this example, we have a grade roster
+
+```{r}
+grade_roster  <- read_lines("../inst/grade_example.csv")
+grade_roster
+```
+
+Also we need the totals to be rounded. As an example, I have included an example set of data
+
+
+```{r}
+SMI_2018_marks_clean
+```
+
+For grade rosters, the total must be rounded to the nearest integer:
+
+```{r}
+SMI_2018_marks_clean  <- 
+  SMI_2018_marks_clean %>% 
+  mutate(
+    Total = round(Total)
+  )
+```
+
+To fill the grade roster, you give the column 
+
+```{r}
+SMI_2018_marks_clean %>% 
+  exam_fill_grade_roster(ID, Total,
+                  infile = "../inst/grade_example.csv",
+                  outfile = "../inst/example_output.csv")
+```
+
+```{r}
+grade_roster  <- read_lines("../inst/example_output.csv")
+grade_roster
+```
+
+**IMPORTANT**
+
+**This is the grade roster - open it and check that it is correct.**
+
+This function will automatically add `FNS` if mark is 0 and also `US10` for marks between 45 and 49, this can be changed for first year courses. 
+
+Also you can pass in a vector of IDs that have a RP mark, e.g., pending a plagiarism decision. 
+
+# Emailing
+
+To help with email, there is a short helper function that will take a vector of IDs and return them as a string that you can paste into an email. 
+
+```{r}
+IDs  <- c('a1078881', 'a1078886')
+exam_get_email_list(IDs)
+```
+
+
+# Get enrolled students
+
+As the canvas grade book can be out of date with regard to enrolment, then I advise using the grade roster as the most up-to-date information. The function `exam_get_enrolled()` takes the grade roster and returns the students info. 
+`
+```{r}
+exam_get_enrolled("../inst/grade_example.csv")
+```
+
+
+# Auditing
+
+For auditing, we need to choose 10% of the results to check. The function `exam_run_audit()` will give those results close to the boundaries of 50, 65, 75, and 85. If more are needed, then you change change the width and the boundaries. 
+
+```{r}
+exam_run_audit(SMI_2018_marks_clean, Total)
+```
+

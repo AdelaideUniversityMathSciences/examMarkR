@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   Case_study: Case_study.html
   admin: admin.html
-  analyis-marks: analyis-marks.html
+  exam_plotting: exam_plotting.html
   exam_report: exam_report.html
   normalization: normalization.html
 

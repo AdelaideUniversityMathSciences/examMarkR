@@ -99,7 +99,7 @@ scale on logit scale" />
       <a href="../articles/admin.html">Exam admin</a>
     </li>
     <li>
-      <a href="../articles/analyis-marks.html">Analysing course marks: an example</a>
+      <a href="../articles/exam_plotting.html">Exam plotting</a>
     </li>
     <li>
       <a href="../articles/exam_report.html">Exam report</a>
@@ -164,11 +164,12 @@ scale on logit scale</p>
   <span class='kw'>`a = 0.5, b = 1.1`</span> <span class='kw'>=</span> <span class='fu'>exam_norm_glonek</span>(<span class='no'>raw</span>, <span class='fl'>0.5</span>, <span class='fl'>1.1</span>),
   <span class='kw'>`a = 0.5, b = 1.5`</span> <span class='kw'>=</span> <span class='fu'>exam_norm_glonek</span>(<span class='no'>raw</span>, <span class='fl'>0.5</span>, <span class='fl'>1.5</span>),
   <span class='kw'>`a = 0.5, b = 0.9`</span> <span class='kw'>=</span> <span class='fu'>exam_norm_glonek</span>(<span class='no'>raw</span>, <span class='fl'>0.5</span>, <span class='fl'>0.9</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in tibble(raw = 0:100, `a = 0.5, b = 1.1` = exam_norm_glonek(raw,     0.5, 1.1), `a = 0.5, b = 1.5` = exam_norm_glonek(raw, 0.5,     1.5), `a = 0.5, b = 0.9` = exam_norm_glonek(raw, 0.5, 0.9)): could not find function "tibble"</span></div><div class='input'><span class='no'>df</span> <span class='kw'>%&gt;%</span>
+)
+<span class='no'>df</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>pivot_longer</span>(-<span class='no'>raw</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='no'>raw</span>, <span class='no'>value</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>name</span>)) +
   <span class='fu'>geom_point</span>() +
-  <span class='fu'>geom_abline</span>(<span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>slope</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in pivot_longer(., -raw): could not find function "pivot_longer"</span></div></pre>
+  <span class='fu'>geom_abline</span>(<span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>slope</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='exam_norm_glonek-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -27,7 +27,7 @@ library(tidyverse)
 The template is an Rmarkdown template:
 
 ```{r, fig.cap="Template dialog box", fig.align='center', out.width="50%"}
-knitr::include_graphics("template.png")
+knitr::include_graphics("../inst/template.png")
 ```
 
 ```{r, include=FALSE}

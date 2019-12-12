@@ -8,8 +8,8 @@
 #' @export
 #'
 #' @examples
-#' get_enrolled(file = "inst/grade_example.csv")
-get_enrolled  <- function(file){
+#' exam_get_enrolled(file = "inst/grade_example.csv")
+exam_get_enrolled  <- function(file){
   # Read in the grade roster
   grade_roster  <- read_lines(file)
   n  <- length(grade_roster)
@@ -18,4 +18,5 @@ get_enrolled  <- function(file){
   data  <- data[, 1:4]
   return(data)
 }
+# exam_get_enrolled(file = "inst/grade_example.csv")
 
