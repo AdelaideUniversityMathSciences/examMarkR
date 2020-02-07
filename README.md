@@ -21,3 +21,8 @@ devtools::install_github("jonotuke/examMarkR")
 ```
 
 ## Example
+
+Best starting point
+is
+
+<https://adelaideuniversitymathsciences.github.io/examMarkR/articles/Case_study.html>
