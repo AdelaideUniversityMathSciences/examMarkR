@@ -17,12 +17,11 @@ So far there is only a development version that you can obtain from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jonotuke/examMarkR")
+devtools::install_github("adelaideuniversitymathsciences/examMarkR")
 ```
 
 ## Example
 
-Best starting point
-is
+Best starting point is
 
 <https://adelaideuniversitymathsciences.github.io/examMarkR/articles/Case_study.html>

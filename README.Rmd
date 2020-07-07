@@ -26,7 +26,7 @@ So far there is only a development version that you can obtain from  [GitHub](ht
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jonotuke/examMarkR")
+devtools::install_github("adelaideuniversitymathsciences/examMarkR")
 ```
 ## Example
 
