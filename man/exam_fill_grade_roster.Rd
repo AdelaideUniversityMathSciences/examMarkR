@@ -4,8 +4,17 @@
 \alias{exam_fill_grade_roster}
 \title{fill_grade_roster}
 \usage{
-exam_fill_grade_roster(df, IDs, total, infile, outfile, supp = 45:49,
-  supp_code = "US10", RP = NULL, trace = TRUE)
+exam_fill_grade_roster(
+  df,
+  IDs,
+  total,
+  infile,
+  outfile,
+  supp = 45:49,
+  supp_code = "US10",
+  RP = NULL,
+  trace = TRUE
+)
 }
 \arguments{
 \item{df}{data frame of marks}

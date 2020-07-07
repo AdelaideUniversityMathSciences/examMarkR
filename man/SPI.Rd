@@ -4,7 +4,8 @@
 \name{SPI}
 \alias{SPI}
 \title{Data for previous SPI subject}
-\format{A data frame with 41 rows and 10 columns
+\format{
+A data frame with 41 rows and 10 columns
 \describe{
 \item{subject}{Subject code}
 \item{year}{Exam year}
@@ -16,7 +17,8 @@
 \item{HD}{High Distinction percent}
 \item{N}{Number of students}
 \item{mean}{Average mark}
-}}
+}
+}
 \source{
 McCannaliser
 }
